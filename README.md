@@ -31,7 +31,7 @@ A Python-based network security project that identifies reachable TCP services o
 - [ ] Milestone 10 — Final documentation and demo
 
 ## Responsible Use
-- This tool is intended for authorized lab systems and systems for which the operator has permission to test. Scan results are observations of network reachability, not proof that a service is vulnerable.
+This tool is intended for authorized lab systems and systems for which the operator has permission to test. Scan results are observations of network reachability, not proof that a service is vulnerable.
 
 ## Planned Deliverables
 - Python source code and automated tests
