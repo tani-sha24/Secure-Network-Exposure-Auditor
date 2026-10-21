@@ -1,0 +1,28 @@
+
+{
+  "policy_name": "Ubuntu Localhost TCP Exposure Policy",
+  "target": "127.0.0.1",
+  "description": "Expected TCP port states for the local development environment.",
+  "expected_ports": {
+    "22": {
+      "service": "SSH",
+      "expected_state": "closed"
+    },
+    "80": {
+      "service": "HTTP",
+      "expected_state": "closed"
+    },
+    "443": {
+      "service": "HTTPS",
+      "expected_state": "closed"
+    },
+    "631": {
+      "service": "IPP/CUPS",
+      "expected_state": "closed"
+    },
+    "5000": {
+      "service": "Development web app",
+      "expected_state": "closed"
+    }
+  }
+}
