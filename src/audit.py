@@ -1,13 +1,20 @@
 
 import argparse
+from datetime import datetime, timezone
 from pathlib import Path
 
-from minimap import PORTS, check_port, validate_target
+from minimap import check_port, validate_target
 from policy_auditor import audit_results, load_policy
+from report_generator import (
+    build_report,
+    write_csv_report,
+    write_json_report,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_POLICY = PROJECT_ROOT / "policies" / "expected_services.json"
+DEFAULT_REPORT_DIR = PROJECT_ROOT / "reports"
 
 
 def main():
@@ -18,12 +25,17 @@ def main():
         "target",
         nargs="?",
         default="127.0.0.1",
-        help="Authorized loopback or private IPv4 address"
+        help="Authorized loopback or private IPv4 address",
     )
     parser.add_argument(
         "--policy",
         default=str(DEFAULT_POLICY),
-        help="Path to expected-services JSON policy"
+        help="Path to expected-services JSON policy",
+    )
+    parser.add_argument(
+        "--report-dir",
+        default=str(DEFAULT_REPORT_DIR),
+        help="Directory for generated JSON and CSV reports",
     )
     args = parser.parse_args()
 
@@ -39,8 +51,8 @@ def main():
 
         scan_results = {}
 
-        for port in policy["expected_ports"]:
-            port = int(port)
+        for port_text in policy["expected_ports"]:
+            port = int(port_text)
             result = check_port(target, port)
             scan_results[port] = result
             print(f"Scanned port {port}: {result}")
@@ -49,7 +61,10 @@ def main():
 
         print("\nSECURITY POLICY AUDIT")
         print("-" * 78)
-        print(f"{'PORT':<8}{'SERVICE':<22}{'EXPECTED':<12}{'OBSERVED':<22}{'STATUS'}")
+        print(
+            f"{'PORT':<8}{'SERVICE':<22}{'EXPECTED':<12}"
+            f"{'OBSERVED':<22}{'STATUS'}"
+        )
         print("-" * 78)
 
         for finding in findings:
@@ -62,15 +77,32 @@ def main():
             )
             print(f"  {finding['message']}")
 
+        report = build_report(
+            target=target,
+            policy_name=policy["policy_name"],
+            findings=findings,
+        )
+
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        report_dir = Path(args.report_dir)
+
+        json_path = write_json_report(
+            report, report_dir / f"audit_{timestamp}.json"
+        )
+        csv_path = write_csv_report(
+            report, report_dir / f"audit_{timestamp}.csv"
+        )
+
+        summary = report["summary"]
         print("-" * 78)
-        alerts = sum(item["status"] == "ALERT" for item in findings)
-        inconclusive = sum(
-            item["status"] == "INCONCLUSIVE" for item in findings
-        )
         print(
-            f"Summary: {len(findings)} ports checked, "
-            f"{alerts} alert(s), {inconclusive} inconclusive."
+            f"Summary: {summary['ports_checked']} ports checked, "
+            f"{summary['alerts']} alert(s), "
+            f"{summary['inconclusive']} inconclusive."
         )
+        print(f"Passed: {summary['passed']}")
+        print(f"JSON report: {json_path}")
+        print(f"CSV report:  {csv_path}")
 
     except (OSError, ValueError, KeyError) as exc:
         parser.error(str(exc))
@@ -78,3 +110,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
