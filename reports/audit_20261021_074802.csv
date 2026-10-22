@@ -1,0 +1,6 @@
+port,service,expected,observed,status,message
+22,SSH,CLOSED,CLOSED,PASS,Port matches expected state: CLOSED
+80,HTTP,CLOSED,CLOSED,PASS,Port matches expected state: CLOSED
+443,HTTPS,CLOSED,CLOSED,PASS,Port matches expected state: CLOSED
+631,IPP/CUPS,CLOSED,OPEN,ALERT,"Expected CLOSED, but observed OPEN"
+5000,Development web app,CLOSED,CLOSED,PASS,Port matches expected state: CLOSED

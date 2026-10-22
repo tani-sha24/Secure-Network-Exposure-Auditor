@@ -1,0 +1,54 @@
+{
+  "project": "Secure Network Exposure Auditor",
+  "target": "127.0.0.1",
+  "policy_name": "Ubuntu Localhost TCP Exposure Policy",
+  "generated_at_utc": "2026-10-21T07:48:02.462628+00:00",
+  "summary": {
+    "ports_checked": 5,
+    "passed": 4,
+    "alerts": 1,
+    "inconclusive": 0
+  },
+  "findings": [
+    {
+      "port": 22,
+      "service": "SSH",
+      "expected": "CLOSED",
+      "observed": "CLOSED",
+      "status": "PASS",
+      "message": "Port matches expected state: CLOSED"
+    },
+    {
+      "port": 80,
+      "service": "HTTP",
+      "expected": "CLOSED",
+      "observed": "CLOSED",
+      "status": "PASS",
+      "message": "Port matches expected state: CLOSED"
+    },
+    {
+      "port": 443,
+      "service": "HTTPS",
+      "expected": "CLOSED",
+      "observed": "CLOSED",
+      "status": "PASS",
+      "message": "Port matches expected state: CLOSED"
+    },
+    {
+      "port": 631,
+      "service": "IPP/CUPS",
+      "expected": "CLOSED",
+      "observed": "OPEN",
+      "status": "ALERT",
+      "message": "Expected CLOSED, but observed OPEN"
+    },
+    {
+      "port": 5000,
+      "service": "Development web app",
+      "expected": "CLOSED",
+      "observed": "CLOSED",
+      "status": "PASS",
+      "message": "Port matches expected state: CLOSED"
+    }
+  ]
+}
