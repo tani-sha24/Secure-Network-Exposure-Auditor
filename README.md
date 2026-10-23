@@ -23,7 +23,7 @@ A Python-based network security project that identifies reachable TCP services o
 - [x] **Milestone 2:** TCP Port Scanner
 - [x] **Milestone 3:** Security Policy Auditing
 - [x] **Milestone 4:** Audit Reports (JSON/CSV)
-- [ ] **Milestone 5:** Cryptography (Hashing, Digital Signatures, Encryption)
+- [x] **Milestone 5:** Cryptography (Hashing, Digital Signatures, Encryption)
 - [ ] **Milestone 6:** Testing and Final Portfolio Documentation
 
 ## Responsible Use
