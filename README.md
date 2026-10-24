@@ -24,7 +24,7 @@ A Python-based network security project that identifies reachable TCP services o
 - [x] **Milestone 3:** Security Policy Auditing
 - [x] **Milestone 4:** Audit Reports (JSON/CSV)
 - [x] **Milestone 5:** Cryptography (Hashing, Digital Signatures, Encryption)
-- [ ] **Milestone 6:** Testing and Final Portfolio Documentation
+- [x] **Milestone 6:** Testing and Final Portfolio Documentation
 
 ## Responsible Use
 This tool is intended for authorized lab systems and systems for which the operator has permission to test. Scan results are observations of network reachability, not proof that a service is vulnerable.
